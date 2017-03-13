@@ -6,7 +6,7 @@
 /*   By: orazafin <orazafin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/08 10:40:17 by orazafin          #+#    #+#             */
-/*   Updated: 2017/03/09 15:03:28 by orazafin         ###   ########.fr       */
+/*   Updated: 2017/03/13 15:03:09 by orazafin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,30 +56,32 @@ int		open_file(char const *file)
 	return (fd);
 }
 
+int		end_read(char *buff, static char *str)
+{
+	char *line_break;
+
+	line_break = ft_strchr((const char *)buff, '\n');
+}
+
 int		get_next_line(int fd, char **line)
 {
 	static char *str = NULL;
 	char buff[BUFF_SIZE + 1];
-	int value;
 	int read_octet;
 	char *tmp;
 
 	tmp = NULL;
 	value = 0;
-	while ((read_octet = read(fd, buff, BUFF_SIZE)) != 0 && (ft_strchr((const char *)buff, '\n') == 0) && (*line = buff))
+	if (!fd)
+		return (-1);
+	while ((read_octet = read(fd, buff, BUFF_SIZE)) != 0 && (ft_strchr((const char *)buff, '\n') == 0)
 	{
-		printf("%s\n", buff);
-		printf("%p\n", *line);
-		tmp = ft_strjoin((char const *)str, (char const *)buff);
+		buff[read_octet] = '\0';
+		tmp = ft_strjoin((char const *)str, (char const *)buff));
 		free(str);
 		str = tmp;
-		printf("%s\n", str);
-		value += read_octet;
-		printf("%d\n", value);
-		printf("\n");
 	}
-
-	return (value);
+	return end_red(buff, str);
 }
 
 int		main(int argc, char const *argv[])
