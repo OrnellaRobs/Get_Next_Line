@@ -6,7 +6,7 @@
 /*   By: orazafin <orazafin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/08 10:40:17 by orazafin          #+#    #+#             */
-/*   Updated: 2017/03/13 15:03:09 by orazafin         ###   ########.fr       */
+/*   Updated: 2017/03/13 17:47:34 by orazafin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,24 @@ int		open_file(char const *file)
 	return (fd);
 }
 
-int		end_read(char *buff, static char *str)
+int		end_read(char *buff, static char *str, int read_octet)
 {
+	char *tmp;
 	char *line_break;
 
-	line_break = ft_strchr((const char *)buff, '\n');
+	if (read_octet != 0)
+	{
+		buff[read_octet] = '\0';
+		tmp = ft_strjoin((char const *)str, (char const *)buff));
+		free(str);
+		str = tmp;
+		line_break = ft_strchr((char const *)str, '\n');
+		str[line_break] = '\0';
+		*line = ft_strdup(str);
+		if (read_octet != 0)
+			return (1);
+	}
+	return (0);
 }
 
 int		get_next_line(int fd, char **line)
@@ -70,8 +83,6 @@ int		get_next_line(int fd, char **line)
 	int read_octet;
 	char *tmp;
 
-	tmp = NULL;
-	value = 0;
 	if (!fd)
 		return (-1);
 	while ((read_octet = read(fd, buff, BUFF_SIZE)) != 0 && (ft_strchr((const char *)buff, '\n') == 0)
@@ -81,7 +92,7 @@ int		get_next_line(int fd, char **line)
 		free(str);
 		str = tmp;
 	}
-	return end_red(buff, str);
+	return end_red(buff, str, read_octet);
 }
 
 int		main(int argc, char const *argv[])
