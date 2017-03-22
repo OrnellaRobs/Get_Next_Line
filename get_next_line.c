@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: orazafin <orazafin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/08 10:40:17 by orazafin          #+#    #+#             */
-/*   Updated: 2017/03/19 18:37:06 by orazafin         ###   ########.fr       */
+/*   Updated: 2017/03/22 16:35:39 by orazafin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int		open_file(char const *file)
 {
 	int fd;
 
-	fd = open("/Users/robinson/Documents/Projects_42/Get_Next_Line/file_text.txt", O_RDONLY);
+	fd = open(file, O_RDONLY);
 	return (fd);
 }
 
@@ -28,11 +28,12 @@ int		end_read(char *str, char *tmp, char *buff, char **line)
     if (end_line != 0)
     {
         tmp = str;
-        str = ft_strdup(end_line + 1);
+		if (end_line + 1)
+			str = ft_strdup(end_line + 1);
         *end_line = 0;
-        *line = ft_strjoin((char const *) tmp, (char const *) end_line);
+    	*line = ft_strjoin((char const *)tmp, (char const *)buff);
+		printf("*line = %s\n", *line);
         free(tmp);
-        printf("%s\n", str);
         return (1);
     }
     return (0);
@@ -47,9 +48,10 @@ int		get_next_line(int fd, char **line)
 
 	if (!fd)
 		return (-1);
-	while ((read_octet = read(fd, buff, BUFF_SIZE) != 0)
+	while (((read_octet = read(fd, buff, BUFF_SIZE)) != 0)
 	&& (ft_strchr((const char *)buff, '\n')) == 0)
 	{
+		printf("buff = %s\n", buff);
 		buff[read_octet] = '\0';
 		if (!str)
 			str = ft_strdup(buff);
@@ -69,13 +71,14 @@ int		main(int argc, char const *argv[])
 	int value;
 	char *line;
 
+	argc++;
 	if ((fd = open_file(argv[1])) == -1)
 		return (-1);
 	value = get_next_line(fd, &line);
-	printf("%d\n", value);
+	printf("value = %d\n", value);
 	value = get_next_line(fd, &line);
-	printf("%d\n", value);
+	printf("value = %d\n", value);
 	value = get_next_line(fd, &line);
-	printf("%d\n", value);
+	printf("value = %d\n", value);
 	return (0);
 }
