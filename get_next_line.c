@@ -6,7 +6,7 @@
 /*   By: orazafin <orazafin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/08 10:40:17 by orazafin          #+#    #+#             */
-/*   Updated: 2017/03/23 18:40:07 by orazafin         ###   ########.fr       */
+/*   Updated: 2017/03/23 19:15:11 by orazafin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ int		line_break(char *str, char *tmp, char *buff, char **line)
 	end_line = ft_strchr((const char *)buff, '\n');
 	str = ft_strdup(end_line + 1);
 	printf("tmp dans line_break = %s\n", tmp);
-    end_line[0] = '\0';
+    *end_line = '\0';
 	*line = ft_strjoin((char const *)tmp, (char const *)buff);
 	printf("*line = %s\n", *line);
-	free(tmp);
+	// free(tmp);
 	printf("str dans line_break = %s\n", str);
 	return (1);
 }
