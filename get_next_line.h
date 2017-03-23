@@ -6,7 +6,7 @@
 /*   By: orazafin <orazafin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/21 19:16:10 by orazafin          #+#    #+#             */
-/*   Updated: 2017/03/22 16:30:45 by orazafin         ###   ########.fr       */
+/*   Updated: 2017/03/23 17:23:57 by orazafin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@
 #include <fcntl.h>
 #include <stdlib.h>
 
+int		main(int argc, char const *argv[]);
 int		get_next_line(int fd, char **line);
 #endif

@@ -1,48 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   test_gnl.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: orazafin <orazafin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/08 10:40:17 by orazafin          #+#    #+#             */
-/*   Updated: 2017/03/23 18:40:07 by orazafin         ###   ########.fr       */
+/*   Created: 2017/03/23 16:14:50 by orazafin          #+#    #+#             */
+/*   Updated: 2017/03/23 17:06:42 by orazafin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include "Libft/libft.h"
+# define BUFF_SIZE 3
 
-int		line_break(char *str, char *tmp, char *buff, char **line)
+int		line_break(char *str, char *buff, char *tmp, char **line)
 {
 	char *end_line;
 
-	tmp = str;
 	end_line = ft_strchr((const char *)buff, '\n');
-	str = ft_strdup(end_line + 1);
-	printf("tmp dans line_break = %s\n", tmp);
-    end_line[0] = '\0';
-	*line = ft_strjoin((char const *)tmp, (char const *)buff);
-	printf("*line = %s\n", *line);
-	free(tmp);
-	printf("str dans line_break = %s\n", str);
+	if (end_line)
+	{
+		str = ft_strdup(end_line + 1);
+		*end_line = 0;
+		*line = ft_strjoin((char const*)tmp, (char const *)buff);
+		free(tmp);
+	}
 	return (1);
 }
+
 int		get_next_line(int fd, char **line)
 {
-	static char *str = NULL;
 	char buff[BUFF_SIZE + 1];
+	static char *str = NULL;
 	int read_octet;
 	char *tmp;
 
-	printf("\n");
-	printf("str au debut de GNL = %s\n", str);
-	if (!fd)
+	if (!line || fd < 0 || BUFF_SIZE < 0)
 		return (-1);
-	while ((read_octet = read(fd, buff, BUFF_SIZE)) != 0)
+	while ((read_octet = read(fd, buff, BUFF_SIZE)))
 	{
-		buff[read_octet] = '\0';
-		if (ft_strchr((const char *)buff, '\n') != 0)
-			return (line_break(str, tmp, buff, line));
+		if (ft_strchr((const char *)buff, '\n'))
+			return (line_break(str, buff, tmp, line));
 		if (!str)
 			str = ft_strdup(buff);
 		else
