@@ -6,7 +6,7 @@
 /*   By: orazafin <orazafin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 17:01:42 by orazafin          #+#    #+#             */
-/*   Updated: 2017/03/23 18:24:48 by orazafin         ###   ########.fr       */
+/*   Updated: 2017/03/25 01:19:51 by orazafin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int		main(int argc, char const *argv[])
 	argc++;
 	if ((fd = open_file(argv[1])) == -1)
 		return (-1);
+	value = get_next_line(fd, &line);
+	printf("value = %d\n", value);
 	value = get_next_line(fd, &line);
 	printf("value = %d\n", value);
 	value = get_next_line(fd, &line);

@@ -6,7 +6,7 @@
 /*   By: orazafin <orazafin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/21 19:16:10 by orazafin          #+#    #+#             */
-/*   Updated: 2017/03/23 17:23:57 by orazafin         ###   ########.fr       */
+/*   Updated: 2017/03/25 01:20:31 by orazafin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #ifndef GET_NEXT_LINE
 # define GET_NEXT_LINE
-# define BUFF_SIZE 3
+# define BUFF_SIZE 100
 
 #include <stdio.h>
 #include "Libft/libft.h"
