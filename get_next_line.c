@@ -33,7 +33,7 @@ int		end_reading(char **str, char **line)
 	int	count_char;
 
 	end_line = ft_strchr((const char *)*str, '\n');
-	if (end_line != NULL)
+	if (end_line != NULL && *(end_line +1))
 	{
 		count_char = ft_strlen(*str) - ft_strlen(end_line);
 		if (!(cpy = malloc(sizeof(char) * count_char + 1)))
