@@ -6,7 +6,7 @@
 /*   By: orazafin <orazafin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/08 10:40:17 by orazafin          #+#    #+#             */
-/*   Updated: 2017/03/25 13:23:59 by orazafin         ###   ########.fr       */
+/*   Updated: 2017/03/29 09:34:56 by orazafin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,10 @@ int		line_break(char **str, char *tmp, char *buff, char **line)
 	tmp = *str;
 	end_line = ft_strchr((const char *)buff, '\n');
 	*str = ft_strdup(end_line + 1);
-	printf("str = %s\n", *str);
 	*end_line = '\0';
 	*line = ft_strjoin((char const *)tmp, (char const *)buff);
-	printf("*line = %s\n", *line);
+	printf("--------------------> *line = %s\n", *line);
 	// free(tmp);
-	printf("str dans line_break = %s\n", *str);
 	return (1);
 }
 
@@ -34,9 +32,7 @@ int		end_reading(char **str, char **line)
 	char *cpy;
 	int	count_char;
 
-	printf("str avant seach = %s\n", *str);
 	end_line = ft_strchr((const char *)*str, '\n');
-	printf("end_line = %s", end_line);
 	if (end_line != NULL)
 	{
 		count_char = ft_strlen(*str) - ft_strlen(end_line);
@@ -45,11 +41,15 @@ int		end_reading(char **str, char **line)
 		cpy = ft_strncpy(cpy, *str, count_char);
 		*str = ft_strdup(end_line + 1);
 		*line = ft_strcpy(*line, cpy);
-		printf("*line = %s\n", *line);
-		printf("str = %s\n", *str);
+		printf("--------------------> *line = %s\n", *line);
 		free(cpy);
 		return (1);
 	}
+	*line = ft_strdup(*str);
+	printf("str = %s\n", *str);
+	free(*str);
+	printf("str = %s\n", *str);
+	printf("--------------------> *line = %s\n", *line);
 	return (0);
 }
 
@@ -60,8 +60,7 @@ int		get_next_line(int fd, char **line)
 	int read_octet;
 	char *tmp;
 
-	printf("str au debut de GNL = %s\n", str);
-	if (!fd)
+	if (!line || fd < 0 || BUFF_SIZE <= 0)
 		return (-1);
 	while ((read_octet = read(fd, buff, BUFF_SIZE)) != 0)
 	{
