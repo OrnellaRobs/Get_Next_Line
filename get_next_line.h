@@ -12,7 +12,13 @@
 //#include <fcntl.h>
 #include <stdlib.h>
 
-//int		main(int argc, char const *argv[]);
+//int     main(int argc, char *argv[]);
 int		get_next_line(int fd, char **line);
 
+typedef struct      s_file
+{
+    int             fd;
+    char            *str;
+    struct s_file   *next;
+}                   t_file;
 #endif
