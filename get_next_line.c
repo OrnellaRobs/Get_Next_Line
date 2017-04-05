@@ -6,13 +6,13 @@
 /*   By: orazafin <orazafin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/30 16:44:30 by orazafin          #+#    #+#             */
-/*   Updated: 2017/04/05 09:03:56 by orazafin         ###   ########.fr       */
+/*   Updated: 2017/04/05 20:11:38 by orazafin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-t_file	*ft_create_element(int fd)
+static t_file		*ft_create_element(int fd)
 {
 	t_file *new_elem;
 
@@ -28,21 +28,22 @@ t_file	*ft_create_element(int fd)
 	return (new_elem);
 }
 
-void	ft_push_back(t_file **list, int fd)
+static void			ft_push_back(t_file **list, int fd)
 {
 	t_file *tmp;
+
 	tmp = *list;
 	if (!tmp)
 		*list = ft_create_element(fd);
 	else
 	{
 		while (tmp->next)
-		tmp = tmp->next;
+			tmp = tmp->next;
 		tmp->next = ft_create_element(fd);
 	}
 }
 
-t_file	  *select_file(t_file **list, int fd)
+static t_file		*select_file(t_file **list, int fd)
 {
 	t_file *tmp;
 
@@ -50,26 +51,27 @@ t_file	  *select_file(t_file **list, int fd)
 	while (tmp)
 	{
 		if (tmp->fd == fd)
-		return (*list);
+			return (tmp);
 		tmp = tmp->next;
 	}
 	ft_push_back(list, fd);
-	return (*list);
+	return (select_file(list, fd));
 }
 
-int	 linebreak(char **str, char *buff, char **line, char *line_break)
+static int	 		end_of_line(char **str, char *buff, char **line,
+	char *line_break)
 {
-	char *eof;
+	char *eol;
 	char *save;
 
 	save = *str;
-	if (!line_break && (eof = ft_strchr(buff, '\n')))
+	if (!line_break && (eol = ft_strchr(buff, '\n')))
 	{
-		if (*(eof + 1))
-			*str = ft_strdup(eof + 1);
+		if (*(eol + 1))
+			*str = ft_strdup(eol + 1);
 		else
 			*str = "";
-		*eof = '\0';
+		*eol = '\0';
 		*line = ft_strjoin(save, buff);
 		return (1);
 	}
@@ -85,33 +87,30 @@ int	 linebreak(char **str, char *buff, char **line, char *line_break)
 	return (1);
 }
 
-int	get_next_line(int fd, char **line)
+int					get_next_line(int fd, char **line)
 {
-	static t_file *list;
-	char buff[BUFF_SIZE + 1];
-	ssize_t read_octet;
-	char	*line_break;
-	t_file *save;
+	static t_file   *list;
+	char            buff[BUFF_SIZE + 1];
+	ssize_t         read_octet;
+	char            *line_break;
+	t_file          *save;
 
-	select_file(&list, fd);
-	save = list;
-	while (save->fd != fd)
-		save = save->next;
 	read_octet = 0;
+	save = select_file(&list, fd);
 	if (!(line) || (save->fd) < 0 || BUFF_SIZE <= 0)
 		return (-1);
 	while (!(line_break = ft_strchr(save->str, '\n')) &&
 	(read_octet = read(save->fd, buff, BUFF_SIZE)))
 	{
 		if (read_octet == -1)
-			return (-1);
+			return(-1);
 		buff[read_octet] = '\0';
 		if (ft_strchr(buff, '\n'))
-			return (linebreak(&(save->str), buff, line, line_break));
+			return (end_of_line(&(save->str), buff, line, line_break));
 		save->str = ft_strjoin(save->str, buff);
 	}
 	if (read_octet == 0 && (ft_strncmp(save->str, "", 1)))
-		return(linebreak(&(save->str), buff, line, line_break));
+		return(end_of_line(&(save->str), buff, line, line_break));
 	*line = "";
 	return (0);
 }
