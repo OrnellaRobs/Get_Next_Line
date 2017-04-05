@@ -6,7 +6,7 @@
 /*   By: orazafin <orazafin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/30 16:44:30 by orazafin          #+#    #+#             */
-/*   Updated: 2017/04/05 20:11:38 by orazafin         ###   ########.fr       */
+/*   Updated: 2017/04/05 20:22:30 by orazafin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,9 @@ int					get_next_line(int fd, char **line)
 {
 	static t_file   *list;
 	char            buff[BUFF_SIZE + 1];
-	ssize_t         read_octet;
 	char            *line_break;
 	t_file          *save;
+	ssize_t         read_octet;
 
 	read_octet = 0;
 	save = select_file(&list, fd);
@@ -110,7 +110,7 @@ int					get_next_line(int fd, char **line)
 		save->str = ft_strjoin(save->str, buff);
 	}
 	if (read_octet == 0 && (ft_strncmp(save->str, "", 1)))
-		return(end_of_line(&(save->str), buff, line, line_break));
+		return (end_of_line(&(save->str), buff, line, line_break));
 	*line = "";
 	return (0);
 }
