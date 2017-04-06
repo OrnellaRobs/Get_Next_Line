@@ -6,10 +6,11 @@
 /*   By: orazafin <orazafin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/30 16:44:30 by orazafin          #+#    #+#             */
-/*   Updated: 2017/04/06 15:36:36 by orazafin         ###   ########.fr       */
+/*   Updated: 2017/04/06 19:41:52 by orazafin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "get_next_line.h"
 
 static t_file		*ft_create_element(int fd)
@@ -22,7 +23,7 @@ static t_file		*ft_create_element(int fd)
 	if (new_elem)
 	{
 		new_elem->fd = fd;
-		new_elem->str = "";
+		new_elem->str = ft_strnew(0);
 		new_elem->next = NULL;
 	}
 	return (new_elem);
@@ -70,9 +71,10 @@ static int			end_of_line(char **str, char *buff, char **line,
 		if (*(eol + 1))
 			*str = ft_strdup(eol + 1);
 		else
-			*str = "";
+			*str = ft_strnew(0);
 		*eol = '\0';
 		*line = ft_strjoin(save, buff);
+		free(save);
 		return (1);
 	}
 	else if (line_break)
@@ -107,10 +109,11 @@ int					get_next_line(int fd, char **line)
 		buff[read_octet] = '\0';
 		if (ft_strchr(buff, '\n'))
 			return (end_of_line(&(save->str), buff, line, line_break));
+		save->tmp = save->str;
 		save->str = ft_strjoin(save->str, buff);
+		free(save->tmp);
 	}
 	if (read_octet == 0 && (ft_strncmp(save->str, "", 1)))
 		return (end_of_line(&(save->str), buff, line, line_break));
-	*line = "";
 	return (0);
 }
