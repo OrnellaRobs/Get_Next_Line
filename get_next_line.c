@@ -6,7 +6,7 @@
 /*   By: orazafin <orazafin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/30 16:44:30 by orazafin          #+#    #+#             */
-/*   Updated: 2017/04/05 20:22:30 by orazafin         ###   ########.fr       */
+/*   Updated: 2017/04/06 15:36:36 by orazafin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static t_file		*ft_create_element(int fd)
 {
-	t_file *new_elem;
+	t_file	*new_elem;
 
 	new_elem = NULL;
 	if (!(new_elem = malloc(sizeof(t_file))))
@@ -30,7 +30,7 @@ static t_file		*ft_create_element(int fd)
 
 static void			ft_push_back(t_file **list, int fd)
 {
-	t_file *tmp;
+	t_file	*tmp;
 
 	tmp = *list;
 	if (!tmp)
@@ -45,7 +45,7 @@ static void			ft_push_back(t_file **list, int fd)
 
 static t_file		*select_file(t_file **list, int fd)
 {
-	t_file *tmp;
+	t_file	*tmp;
 
 	tmp = *list;
 	while (tmp)
@@ -58,11 +58,11 @@ static t_file		*select_file(t_file **list, int fd)
 	return (select_file(list, fd));
 }
 
-static int	 		end_of_line(char **str, char *buff, char **line,
+static int			end_of_line(char **str, char *buff, char **line,
 	char *line_break)
 {
-	char *eol;
-	char *save;
+	char	*eol;
+	char	*save;
 
 	save = *str;
 	if (!line_break && (eol = ft_strchr(buff, '\n')))
@@ -89,11 +89,11 @@ static int	 		end_of_line(char **str, char *buff, char **line,
 
 int					get_next_line(int fd, char **line)
 {
-	static t_file   *list;
-	char            buff[BUFF_SIZE + 1];
-	char            *line_break;
-	t_file          *save;
-	ssize_t         read_octet;
+	static	t_file	*list;
+	char			buff[BUFF_SIZE + 1];
+	char			*line_break;
+	t_file			*save;
+	ssize_t			read_octet;
 
 	read_octet = 0;
 	save = select_file(&list, fd);
@@ -103,7 +103,7 @@ int					get_next_line(int fd, char **line)
 	(read_octet = read(save->fd, buff, BUFF_SIZE)))
 	{
 		if (read_octet == -1)
-			return(-1);
+			return (-1);
 		buff[read_octet] = '\0';
 		if (ft_strchr(buff, '\n'))
 			return (end_of_line(&(save->str), buff, line, line_break));
