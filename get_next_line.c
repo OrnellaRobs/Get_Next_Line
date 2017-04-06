@@ -6,11 +6,10 @@
 /*   By: orazafin <orazafin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/30 16:44:30 by orazafin          #+#    #+#             */
-/*   Updated: 2017/04/06 19:41:52 by orazafin         ###   ########.fr       */
+/*   Updated: 2017/04/06 19:47:18 by orazafin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "get_next_line.h"
 
 static t_file		*ft_create_element(int fd)
