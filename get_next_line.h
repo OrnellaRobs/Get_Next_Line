@@ -6,7 +6,7 @@
 /*   By: orazafin <orazafin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/06 15:37:26 by orazafin          #+#    #+#             */
-/*   Updated: 2017/04/06 18:50:42 by orazafin         ###   ########.fr       */
+/*   Updated: 2017/04/06 20:50:03 by orazafin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # define BUFF_SIZE 8
-# include "./Libft/libft.h"
+# include "./libft/libft.h"
 # include <unistd.h>
 # include <stdlib.h>
 
